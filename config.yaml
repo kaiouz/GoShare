@@ -1,0 +1,4 @@
+dir:
+  - /Users/zoukai/Downloads
+cacheDir: /Users/zoukai/temp/goshare
+port: 8080
