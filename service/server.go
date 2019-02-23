@@ -35,7 +35,11 @@ func (s *server) Start() error {
 	s.app.Get("/resources", func(ctx context.Context) {
 		resType := ctx.URLParam("type")
 		if resType != "" {
-			ctx.JSON(s.typeMap[res.ResourceType(resType)])
+			if result, ok := s.typeMap[res.ResourceType(resType)]; ok {
+				ctx.JSON(result)
+			} else {
+				ctx.JSON([]string{})
+			}
 		} else {
 			ctx.JSON(s.res)
 		}
@@ -49,7 +53,6 @@ func (s *server) Start() error {
 			ctx.NotFound()
 		}
 	})
-
 	return s.app.Run(iris.Addr(fmt.Sprintf(":%d", s.port)))
 }
 
